@@ -5,23 +5,20 @@
 header('Content-Type: text/html; charset=utf-8');
 
 $url = "http://www.qichacha.com/";
-/** 要查询的企业名称 */
-$comname = "小米科技有限责任公司";
 /** 存储下cookie */
-set_cookie_files($url);
+//set_cookie_files($url);
 /** 设置下http 头 */
-$userAgent       = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36 QQBrowser/4.0.4035.400";
-$request_headers = array();
-
-$request_headers[] = "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+$request_headers           = array();
+$request_headers["accept"] = "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
 //$request_headers[] = "Accept-Encoding:gzip, deflate, sdch";
-$request_headers[] = "Accept-Language:zh-CN,zh;q=0.8";
-$request_headers[] = "Cache-Control:max-age=0";
-$request_headers[] = "Connection:keep-alive";
-$request_headers[] = "Host:www.qichacha.com";
-$request_headers[] = "Referer:http://www.qichacha.com/search?key=" . urlencode($comname) . "&index=2";
-$request_headers[] = "Upgrade-Insecure-Requests:1";
-$request_headers[] = 'User-Agent: ' . $userAgent;
+$request_headers["acceptlan"] = "Accept-Language:zh-CN,zh;q=0.8";
+$request_headers["cache"]     = "Cache-Control:max-age=0";
+$request_headers["connect"]   = "Connection:keep-alive";
+$request_headers["host"]      = "Host:www.qichacha.com";
+$request_headers["refer"]     = "Referer:http://www.qichacha.com/search?key=" . urlencode("小米科技有限责任公司") . "&index=2";
+$request_headers["upgrade"]   = "Upgrade-Insecure-Requests:1";
+$request_headers["useragent"] = "User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36 QQBrowser/4.1.4086.400";
+$request_headers["cookie"]    = "Cookie:PHPSESSID=i51elta765n84vhdm8fcip9eb2; gr_user_id=b478344a-dd8a-436b-80b2-b721f71b7582; CNZZDATA1254842228=859209480-1468037019-http%253A%252F%252Fmanage.xizhi.com%252F%7C1468043453; gr_session_id_9c1eb7420511f8b2=c8637e5b-2fcb-4590-bdd1-fcc5366cc574";
 /** 读取数据库开始排查信息 */
 $conn = new Table("localhost");
 $id   = 0;
@@ -31,13 +28,15 @@ while (1) {
         break;
     }
     foreach ($result as $value) {
+        //$value = $conn->findOne("select * from test.company_check where id = '389' limit 1");
         $id      = $value["id"];
         $comname = trim($value["comname"]);
         if ($value["ischeck"]) {
             continue;
         }
+        $request_headers["refer"] = "Referer:http://www.qichacha.com/search?key=" . urlencode($comname) . "&index=2";
         /** 开始排查下结果 */
-        $content = curl_get_content("http://www.qichacha.com/search?key=" . urlencode($comname) . "&index=2", $request_headers);
+        $content = curl_get_content("http://www.qichacha.com/search?key=" . urlencode($comname), array_values($request_headers));
         preg_match('/小查为您找到\s+<span class="text-danger">\s+(\d+)\s+<\/span>\s+家符合条件的企业, 用时/', $content, $matches);
         if (empty($matches)) {
             echo $comname;
@@ -48,6 +47,8 @@ while (1) {
         /** 开始更新下数据 */
         $conn->update("update test.company_check set qccnum = '" . $matches[1] . "', ischeck = '1' where id = '" . $value["id"] . "'");
         echo $value["cid"] . "\n";
+        /** 休眠5s-1分钟 */
+        usleep(rand(5000, 60000));
     }
 }
 
@@ -76,7 +77,7 @@ function curl_get_content($url, $request_headers, $cookie_file = "/tmp/cookie.tx
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //获取页面内容不直接输出
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $request_headers);
-    curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_file);
+    //curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_file);
     $output = curl_exec($ch);
     curl_close($ch);
     return $output;
@@ -86,7 +87,7 @@ class Config
 {
     public static $dbArr = array(
         'localhost' => array(
-            '127.0.0.1', "root", "123456", "test",
+            '127.0.0.1', "root", "", "test",
         ),
     );
     public static $cateApiUrl = 'http://cate.ch.gongchang.com/cate_json/'; //本地接口无法使用，暂时调取线上的
