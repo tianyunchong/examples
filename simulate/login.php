@@ -18,7 +18,7 @@ $request_headers["host"]      = "Host:www.qichacha.com";
 $request_headers["refer"]     = "Referer:http://www.qichacha.com/search?key=" . urlencode("小米科技有限责任公司") . "&index=2";
 $request_headers["upgrade"]   = "Upgrade-Insecure-Requests:1";
 $request_headers["useragent"] = "User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36 QQBrowser/4.1.4086.400";
-$request_headers["cookie"]    = "Cookie:PHPSESSID=i51elta765n84vhdm8fcip9eb2; gr_user_id=b478344a-dd8a-436b-80b2-b721f71b7582; CNZZDATA1254842228=859209480-1468037019-http%253A%252F%252Fmanage.xizhi.com%252F%7C1468043453; gr_session_id_9c1eb7420511f8b2=c8637e5b-2fcb-4590-bdd1-fcc5366cc574";
+$request_headers["cookie"]    = "Cookie:PHPSESSID=iif0hsellh14bli515iq39ofr1; gr_user_id=9cf3527e-f280-4270-9225-88f459700e05; CNZZDATA1254842228=791208560-1468021834-http%253A%252F%252Fmanage.xizhi.com%252F%7C1468221673; gr_session_id_9c1eb7420511f8b2=5e54d382-c7cf-4e9b-b595-30b64a3447ea";
 /** 读取数据库开始排查信息 */
 $conn = new Table("localhost");
 $id   = 0;
@@ -87,7 +87,7 @@ class Config
 {
     public static $dbArr = array(
         'localhost' => array(
-            '127.0.0.1', "root", "", "test",
+            '127.0.0.1', "root", "123456", "test",
         ),
     );
     public static $cateApiUrl = 'http://cate.ch.gongchang.com/cate_json/'; //本地接口无法使用，暂时调取线上的

@@ -13,7 +13,7 @@ $cookie_file = "/tmp/company.cookie";
 $request_headers   = array();
 $request_headers[] = "Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
 //$request_headers[] = "Accept-Encoding:gzip, deflate, sdch";
-$request_headers[] = "Cookie:_GCWGuid=8DA4B40C-5037-3613-3033-8E4E242051D4; m_xizhi_user=KqhGl8RZumn3aFCLOwsoXgVuzKi3aN2a0DMNcrsRGZKN8m%2Fma1ifdvWDKeU7kRzwD29IrT4LvPYB8MKql9vSVstuepyvCIk3JlzbC0DaMS4imyT9enpr1P77fA3Hj58D";
+$request_headers[] = "Cookie:_GCWGuid=E300D389-4552-8895-5A2A-B8CB8CA2E416; m_xizhi_user=SF6xdSpyI1My9tCp6zSJ4arXXz16%2BqaDlPhcJh3Sl9EDiheEbDbfeU5Gdw3giIQETYhJlILZSWpnAeegIjh8XEgt%2FeqqEOPxLcnOFknUKIkuKvGzVh7E2WvLS471IQPa";
 $request_headers[] = "Accept-Language:zh-CN,zh;q=0.8";
 $request_headers[] = "Connection:keep-alive";
 $request_headers[] = "Host:manage.xizhi.com";
@@ -93,7 +93,7 @@ class Config
 {
     public static $dbArr = array(
         'localhost' => array(
-            '127.0.0.1', "root", "", "test",
+            '127.0.0.1', "root", "123456", "test",
         ),
     );
     public static $cateApiUrl = 'http://cate.ch.gongchang.com/cate_json/'; //本地接口无法使用，暂时调取线上的

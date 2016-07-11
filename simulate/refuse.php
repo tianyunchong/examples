@@ -9,14 +9,14 @@
 $cookie_file       = "/tmp/company.cookie";
 $request_headers   = array();
 $request_headers[] = "Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-$request_headers[] = "Cookie:_GCWGuid=8DA4B40C-5037-3613-3033-8E4E242051D4; m_xizhi_user=KqhGl8RZumn3aFCLOwsoXgVuzKi3aN2a0DMNcrsRGZKN8m%2Fma1ifdvWDKeU7kRzwD29IrT4LvPYB8MKql9vSVstuepyvCIk3JlzbC0DaMS4imyT9enpr1P77fA3Hj58D";
+$request_headers[] = "Cookie:_GCWGuid=E300D389-4552-8895-5A2A-B8CB8CA2E416; m_xizhi_user=SF6xdSpyI1My9tCp6zSJ4arXXz16%2BqaDlPhcJh3Sl9EDiheEbDbfeU5Gdw3giIQETYhJlILZSWpnAeegIjh8XEgt%2FeqqEOPxLcnOFknUKIkuKvGzVh7E2WvLS471IQPa";
 $request_headers[] = "Accept-Language:zh-CN,zh;q=0.8";
 $request_headers[] = "Connection:keep-alive";
 $request_headers[] = "Host:manage.xizhi.com";
 $request_headers[] = "Referer:http://manage.xizhi.com/gs/detail/?cid=1876559";
 $request_headers[] = "Upgrade-Insecure-Requests:1";
 $request_headers[] = "User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.82 Safari/537.36 QQBrowser/4.0.4035.400";
-$path              = "/data/cap/examples/simulate/result.log";
+$path              = "/www/gitwork/examples/simulate/result.log";
 $f                 = fopen($path, "r") or die("无法打开文件");
 while (!feof($f)) {
     $line = trim(fgets($f));

@@ -1,25 +1,39 @@
 <?php
 /**
- * 获取下查询结果为空的
+ * 不包含公司或厂的
+ * 包含个体的，去掉小括号内容字数小于6的
  */
 $conn = new Table("localhost");
 $id   = 0;
 while (1) {
-    $resultArr = $conn->findAll("select * from test.company_check where id > '{$id}' order by id asc limit 100");
+    $resultArr = $conn->findAll("select * from test.company_check_sybak where id > '{$id}' order by id asc limit 100");
     if (empty($resultArr)) {
         break;
     }
     foreach ($resultArr as $value) {
         $id = $value["id"];
-        //if ($value["ischeck"] != 1) {
-        //   continue;
-        //}
-        //if ($value["qccnum"] > 0) {
-        //  continue;
-        //}
-        //if (strstr($value["comname"], "（") || strstr($value["comname"], "(") || strstr($value["comname"], " ") || strstr($value["comname"], "-") || strstr($value["comname"], "【")) {
-        //   continue;
-        //}
+        /** 去掉下括号 */
+        if (strstr($value["comname"], "(")) {
+            $pos              = stripos($value["comname"], "(");
+            $value["comname"] = substr($value["comname"], 0, $pos);
+        } elseif (strstr($value["comname"], "（")) {
+            $pos              = stripos($value["comname"], "（");
+            $value["comname"] = substr($value["comname"], 0, $pos);
+        }
+        if (strstr($value["comname"], "个体")) {
+            file_put_contents("result.log", $value["cid"] . "\t" . $value["comname"] . "\n", FILE_APPEND);
+            echo $id . "\n";
+            continue;
+        }
+        if (strstr($value["comname"], "公司")) {
+            continue;
+        }
+        if (strstr($value["comname"], "厂")) {
+            continue;
+        }
+        if (mb_strlen($value["comname"], "utf8") >= 6) {
+            continue;
+        }
         file_put_contents("result.log", $value["cid"] . "\t" . $value["comname"] . "\n", FILE_APPEND);
         echo $id . "\n";
     }
